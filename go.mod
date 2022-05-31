@@ -1,4 +1,4 @@
-module github.com/maxatome/go-vitotrol
+module github.com/TomTom68/go-vitotrol
 
 go 1.18
 
