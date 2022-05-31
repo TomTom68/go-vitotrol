@@ -39,6 +39,7 @@ const (
 	OperatingModeRequested AttrID = 92     // konf_betriebsart_rw
 	OperatingModeCurrent   AttrID = 708    // aktuelle_betriebsart_r
 	FrostProtectionStatus  AttrID = 717    // zustand_frostgefahr_r
+	BetriebsartM2          AttrID = 94     // konf_betriebsart_rw
 	NoAttr                 AttrID = 0xffff // Used in error cases
 )
 
@@ -264,6 +265,18 @@ var AttributesRef = map[AttrID]*AttrRef{
 		Access: ReadOnly,
 		Doc:    "Frost protection status",
 		Name:   "FrostProtectionStatus",
+	},
+	BetriebsartM2: {
+		Type: NewEnum([]string{ // 0 -> 4
+			"Abschalt",
+			"Nur WW",
+			"Heizen + WW",
+			"Dauernd Reduziert",
+			"Dauernd Normal",
+		}),
+		Access: ReadWrite,
+		Doc:    "Betriebsart Fussbodenheizung",
+		Name:   "BetriebsartM2",
 	},
 }
 
