@@ -276,7 +276,7 @@ var AttributesRef = map[AttrID]*AttrRef{
 		}),
 		Access: ReadWrite,
 		Doc:    "Betriebsart Fussbodenheizung",
-		Name:   "BetriebsartM2",
+		Name:   "konf_betriebsart_rw-0x005e",
 	},
 }
 
