@@ -11,7 +11,6 @@ type AttrID uint16
 // Attribute IDs currently supported by the library. For each, the
 // Vitotrol™ name.
 const (
-	IndoorTemp             AttrID = 5367   // temp_rts_r
 	OutdoorTemp            AttrID = 5373   // temp_ats_r
 	SmokeTemp              AttrID = 5372   // temp_agt_r
 	BoilerTemp             AttrID = 5374   // temp_kts_r
@@ -77,12 +76,6 @@ func (r *AttrRef) String() string {
 
 // AttributesRef lists the reference for each attribute ID.
 var AttributesRef = map[AttrID]*AttrRef{
-	IndoorTemp: {
-		Type:   TypeDouble,
-		Access: ReadOnly,
-		Doc:    "Indoor temperature",
-		Name:   "IndoorTemp",
-	},
 	OutdoorTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
