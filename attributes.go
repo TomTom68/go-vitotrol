@@ -36,9 +36,9 @@ const (
 	HolidaysEnd            AttrID = 309    // konf_ferien_ende_rw
 	HolidaysStatus         AttrID = 714    // zustand_ferienprogramm_r
 	Way3ValveStatus        AttrID = 5389   // info_status_umschaltventil_r
-	OperatingModeRequested AttrID = 92     // konf_betriebsart_rw
 	OperatingModeCurrent   AttrID = 708    // aktuelle_betriebsart_r
 	FrostProtectionStatus  AttrID = 717    // zustand_frostgefahr_r
+	BetriebsartM1          AttrID = 92     // konf_betriebsart_rw
 	BetriebsartM2          AttrID = 94     // konf_betriebsart_rw
 	NoAttr                 AttrID = 0xffff // Used in error cases
 )
@@ -237,18 +237,6 @@ var AttributesRef = map[AttrID]*AttrRef{
 		Doc:    "3-way valve status",
 		Name:   "3WayValveStatus",
 	},
-	OperatingModeRequested: {
-		Type: NewEnum([]string{ // 0 -> 4
-			"off",
-			"DHW only",
-			"heating+DHW",
-			"continuous reduced",
-			"continuous normal",
-		}),
-		Access: ReadWrite,
-		Doc:    "Operating mode requested",
-		Name:   "OperatingModeRequested",
-	},
 	OperatingModeCurrent: {
 		Type: NewEnum([]string{ // 0 -> 3
 			"stand-by",
@@ -266,6 +254,18 @@ var AttributesRef = map[AttrID]*AttrRef{
 		Doc:    "Frost protection status",
 		Name:   "FrostProtectionStatus",
 	},
+	BetriebsartM1: {
+                Type: NewEnum([]string{ // 0 -> 4
+                        "Abschalt",
+                        "Nur WW",
+                        "Heizen + WW",
+                        "Dauernd Reduziert",
+                        "Dauernd Normal",
+                }),
+                Access: ReadWrite,
+                Doc:    "Betriebsart Heizkörper",
+                Name:   "BetriebsartM1",
+        },
 	BetriebsartM2: {
 		Type: NewEnum([]string{ // 0 -> 4
 			"Abschalt",
