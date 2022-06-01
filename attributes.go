@@ -40,6 +40,8 @@ const (
 	FrostProtectionStatus  AttrID = 717    // zustand_frostgefahr_r
 	BetriebsartM1          AttrID = 92     // konf_betriebsart_rw
 	BetriebsartM2          AttrID = 94     // konf_betriebsart_rw
+	NeigungM1              AttrID = 2869   // konf_neigung_rw
+	NeigungM2              AttrID = 2871   // konf_neigung_rw
 	NoAttr                 AttrID = 0xffff // Used in error cases
 )
 
@@ -278,6 +280,18 @@ var AttributesRef = map[AttrID]*AttrRef{
 		Doc:    "Betriebsart Fussbodenheizung",
 		Name:   "konf_betriebsart_rw-0x005e",
 	},
+	NeigungM1: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Neigung Heizkörper",
+                Name:   "NeigungM1",
+	},
+        NeigungM2: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Neigung Fussbodenheizung",
+                Name:   "NeigungM2",
+        },
 }
 
 // AddAttributeRef adds a new attribute to the "official" list. This
