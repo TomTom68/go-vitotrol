@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/maxatome/go-vitotrol"
+	"github.com/TomTom68/go-vitotrol"
 )
 
 func existTimesheetName(tsName string) (vitotrol.TimesheetID, error) {
