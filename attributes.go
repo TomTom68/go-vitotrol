@@ -26,26 +26,34 @@ const (
 	HeisswasserSollTemp    AttrID = 51     // konf_ww_solltemp_rw
 	AnzahlBrennerstunden   AttrID = 104    // anzahl_brennerstunden_r
 	BrennerStatus          AttrID = 600    // zustand_brenner_r
-	BurnerStarts           AttrID = 111    // anzahl_brennerstart_r
-	InternalPumpStatus     AttrID = 245    // zustand_interne_pumpe_r
-	HeatingPumpStatus      AttrID = 729    // zustand_heizkreispumpe_r
-	CirculationPumpState   AttrID = 7181   // zustand_zirkulationspumpe_r
-	PartyMode              AttrID = 7855   // konf_partybetrieb_rw
-	EnergySavingMode       AttrID = 7852   // konf_sparbetrieb_rw
-	DateTime               AttrID = 5385   // konf_uhrzeit_rw
-	CurrentError           AttrID = 7184   // aktuelle_fehler_r
-	HolidaysStart          AttrID = 306    // konf_ferien_start_rw
-	HolidaysEnd            AttrID = 309    // konf_ferien_ende_rw
-	HolidaysStatus         AttrID = 714    // zustand_ferienprogramm_r
-	Way3ValveStatus        AttrID = 5389   // info_status_umschaltventil_r
-	OperatingModeCurrent   AttrID = 708    // aktuelle_betriebsart_r
-	FrostProtectionStatus  AttrID = 717    // zustand_frostgefahr_r
+	AnzahlBrennerStarts    AttrID = 111    // anzahl_brennerstart_r
+	InternerPumpenStatus   AttrID = 245    // zustand_interne_pumpe_r
+	HeizPumpenStatusM1     AttrID = 729    // zustand_heizkreispumpe_r
+	HeizPumpenStatusM2     AttrID = 730    // zustand_heizkreispumpe_r
+	ZirkPumpenStatus       AttrID = 7181   // zustand_zirkulationspumpe_r
+	PartyModusM1           AttrID = 7855   // konf_partybetrieb_rw
+	PartyModusM2           AttrID = 7856   // konf_partybetrieb_rw
+	EnergieSparmodusM1     AttrID = 7852   // konf_sparbetrieb_rw
+	EnergieSparmodusM2     AttrID = 7853   // konf_sparbetrieb_rw
+	DatumUhrzeit           AttrID = 5385   // konf_uhrzeit_rw
+	AktuellerFehler        AttrID = 7184   // aktuelle_fehler_r
+	FerienStartM1          AttrID = 306    // konf_ferien_start_rw
+	FerienStartM2          AttrID = 307    // konf_ferien_start_rw
+	FerienEndeM1           AttrID = 309    // konf_ferien_ende_rw
+	FerienEndeM2           AttrID = 310    // konf_ferien_ende_rw
+	ZustandFerienProgM1    AttrID = 714    // zustand_ferienprogramm_r
+	ZustandFerienProgM2    AttrID = 715    // zustand_ferienprogramm_r
+	AktuelleBetriebsartM1  AttrID = 708    // aktuelle_betriebsart_r
+	AktuelleBetriebsartM2  AttrID = 709    // aktuelle_betriebsart_r
+	ZustandFrostgefahrM1   AttrID = 717    // zustand_frostgefahr_r
+	ZustandFrostgefahrM2   AttrID = 718    // zustand_frostgefahr_r
 	BetriebsartM1          AttrID = 92     // konf_betriebsart_rw
 	BetriebsartM2          AttrID = 94     // konf_betriebsart_rw
 	NeigungM1              AttrID = 2869   // konf_neigung_rw
 	NeigungM2              AttrID = 2871   // konf_neigung_rw
 	NiveauM1               AttrID = 2875   // konf_niveau_rw
 	NiveauM2               AttrID = 2877   // konf_niveau_rw
+	Heizungsschema         AttrID = 801    // konf_heizungsschema_r
 	NoAttr                 AttrID = 0xffff // Used in error cases
 )
 
@@ -176,105 +184,180 @@ var AttributesRef = map[AttrID]*AttrRef{
 		Doc:    "Brenner Status",
 		Name:   "BrennerStatus",
 	},
-	BurnerStarts: {
+	AnzahlBrennerStarts: {
 		Type:   TypeDouble,
 		Access: ReadWrite,
-		Doc:    "Burner starts",
-		Name:   "BurnerStarts",
+		Doc:    "Anzahl von Brennerstarts",
+		Name:   "AnzahlBrennerStarts",
 	},
-	InternalPumpStatus: {
+	InternerPumpenStatus: {
 		Type: NewEnum([]string{ // 0 -> 3
-			"off",
-			"on",
-			"off2",
-			"on2",
+			"Aus",
+			"Ein",
+			"Aus2",
+			"Ein2",
 		}),
 		Access: ReadOnly,
-		Doc:    "Internal pump status",
-		Name:   "InternalPumpStatus",
+		Doc:    "Interner Pumpen Status",
+		Name:   "InternerPumpenStatus",
 	},
-	HeatingPumpStatus: {
-		Type:   TypeOnOffEnum,
+	HeizPumpenStatusM1: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
 		Access: ReadOnly,
-		Doc:    "Heating pump status",
-		Name:   "HeatingPumpStatus",
+		Doc:    "Zustand Heizkreispumpe Heizkörper",
+		Name:   "HeizPumpenStatusM1",
 	},
-	CirculationPumpState: {
-		Type:   TypeOnOffEnum,
+	HeizPumpenStatusM2: {
+                Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
+                Access: ReadOnly,
+                Doc:    "Zustand Heizkreispumpe Hußbodenheizung",
+                Name:   "HeizPumpenStatusM2",
+        },
+	ZirkPumpenStatus: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
 		Access: ReadOnly,
-		Doc:    "Statut pompe circulation",
-		Name:   "CirculationPumpState",
+		Doc:    "Zustand Zirkulationspumpe",
+		Name:   "ZirkPumpenStatus",
 	},
-	PartyMode: {
-		Type:   TypeEnabledEnum,
+	PartyModusM1: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
 		Access: ReadWrite,
-		Doc:    "Party mode status",
-		Name:   "PartyMode",
+		Doc:    "Partymodus Heizkörper",
+		Name:   "PartyModusM1",
 	},
-	EnergySavingMode: {
-		Type:   TypeEnabledEnum,
+	PartyModusM2: {
+                Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
+                Access: ReadWrite,
+                Doc:    "Partymodus Fußbodenheizung",
+                Name:   "PartyModusM2",
+        },
+	EnergieSparmodusM1: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
 		Access: ReadWrite,
-		Doc:    "Energy saving mode status",
-		Name:   "EnergySavingMode",
+		Doc:    "Energiesparmodus Heizkörper",
+		Name:   "EnergieSparmodusM1",
 	},
-	DateTime: {
+	EnergieSparmodusM2: {
+                Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
+                Access: ReadWrite,
+                Doc:    "Energiesparmodus Fußbodenheizung",
+                Name:   "EnergieSparmodusM2",
+        },
+	DatumUhrzeit: {
 		Type:   TypeDate,
 		Access: ReadWrite,
-		Doc:    "Current date and time",
-		Name:   "DateTime",
+		Doc:    "Aktuelles Datum mir Uhrzeit",
+		Name:   "DatumUhrzeit",
 	},
-	CurrentError: {
+	AktuellerFehler: {
 		Type:   TypeString,
 		Access: ReadOnly,
-		Doc:    "Current error",
-		Name:   "CurrentError",
+		Doc:    "Fehlermeldung",
+		Name:   "AktuellerFehler",
 	},
-	HolidaysStart: {
+	FerienStartM1: {
 		Type:   TypeDate,
 		Access: ReadWrite,
-		Doc:    "Holidays begin date",
-		Name:   "HolidaysStart",
+		Doc:    "Start der Ferienzeit für Heizkörper",
+		Name:   "FerienStartM1",
 	},
-	HolidaysEnd: {
+	FerienStartM2: {
+                Type:   TypeDate,
+                Access: ReadWrite,
+                Doc:    "Start der Ferienzeit für Fußbodenheizung",
+                Name:   "FerienStartM2",
+        },
+	FerienEndeM1: {
 		Type:   TypeDate,
 		Access: ReadWrite,
-		Doc:    "Holidays end date",
-		Name:   "HolidaysEnd",
+		Doc:    "Ende der Ferienzeit für Heizkörper",
+		Name:   "FerienEndeM1",
 	},
-	HolidaysStatus: {
-		Type:   TypeEnabledEnum,
+	FerienEndeM2: {
+                Type:   TypeDate,
+                Access: ReadWrite,
+                Doc:    "Ende der Ferienzeit für Fußbodenheizung",
+                Name:   "FerienEndeM2",
+        },
+	ZustandFerienProgM1: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "inaktiv",
+                        "aktiv",
+                }),
 		Access: ReadOnly,
-		Doc:    "Holidays program status",
-		Name:   "HolidaysStatus",
+		Doc:    "Zustand Ferienprogramm Heizkörper",
+		Name:   "ZustandFerienProgM1",
 	},
-	Way3ValveStatus: {
+	ZustandFerienProgM2: {
+                Type: NewEnum([]string{ // 0 -> 1
+                        "inaktiv",
+                        "aktiv",
+                }),
+                Access: ReadOnly,
+                Doc:    "Zustand Ferienprogramm Fußbodenheizung",
+                Name:   "ZustandFerienProgM2",
+        },
+	AktuelleBetriebsartM1: {
 		Type: NewEnum([]string{ // 0 -> 3
-			"undefined",
-			"heating",
-			"middle position",
-			"hot water",
+			"Abschaltbetrieb",
+			"Reduzierter Betrieb",
+			"Normalbetrieb",
+			"Dauernd Normalbetrieb",
 		}),
 		Access: ReadOnly,
-		Doc:    "3-way valve status",
-		Name:   "3WayValveStatus",
+		Doc:    "Betriebsart Heizkörper",
+		Name:   "AktuelleBetriebsartM1",
 	},
-	OperatingModeCurrent: {
-		Type: NewEnum([]string{ // 0 -> 3
-			"stand-by",
-			"reduced",
-			"normal",
-			"continuous normal",
-		}),
+	AktuelleBetriebsartM2: {
+                Type: NewEnum([]string{ // 0 -> 3
+                        "Abschaltbetrieb",
+                        "Reduzierter Betrieb",
+                        "Normalbetrieb",
+                        "Dauernd Normalbetrieb",
+                }),
+                Access: ReadOnly,
+                Doc:    "Betriebsart Fußbodenheizung",
+                Name:   "AktuelleBetriebsartM2",
+        },
+	ZustandFrostgefahrM1: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "inaktiv",
+                        "aktiv",
+                }),
 		Access: ReadOnly,
-		Doc:    "Operating mode",
-		Name:   "OperatingModeCurrent",
+		Doc:    "Zustand Frostgefahr Heizkörper",
+		Name:   "ZustandFrostgefahrM1",
 	},
-	FrostProtectionStatus: {
-		Type:   TypeEnabledEnum,
-		Access: ReadOnly,
-		Doc:    "Frost protection status",
-		Name:   "FrostProtectionStatus",
-	},
+	ZustandFrostgefahrM2: {
+                Type: NewEnum([]string{ // 0 -> 1
+                        "inaktiv",
+                        "aktiv",
+                }),
+                Access: ReadOnly,
+                Doc:    "Zustand Frostgefahr Fußbodenheizung",
+                Name:   "ZustandFrostgefahrM2",
+        },
 	BetriebsartM1: {
                 Type: NewEnum([]string{ // 0 -> 4
                         "Abschalt",
@@ -323,7 +406,24 @@ var AttributesRef = map[AttrID]*AttrRef{
                 Doc:    "Niveau Fussbodenheizung",
                 Name:   "NiveauM2",
         },
-
+	Heizungsschema: {
+                Type: NewEnum([]string{ // 0 -> 10
+                        "",
+                        "1 A1",
+                        "2 A1 + WW",
+                        "3 M2",
+                        "4 M2 + WW",
+                        "5 A1 + M2",
+                        "6 A1 + M2 + WW",
+                        "7 M2 + M3",
+                        "8 M2 + M3 + WW",
+                        "9 A1 + M2 + M3",
+                        "10 A1 + M2 + M3 + WW",
+                }),
+                Access: ReadOnly,
+                Doc:    "Heizungsschema für Anlage",
+                Name:   "Heizungsschema",
+        },
 }
 
 // AddAttributeRef adds a new attribute to the "official" list. This
