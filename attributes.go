@@ -11,19 +11,21 @@ type AttrID uint16
 // Attribute IDs currently supported by the library. For each, the
 // Vitotrol™ name.
 const (
-	OutdoorTemp            AttrID = 5373   // temp_ats_r
-	SmokeTemp              AttrID = 5372   // temp_agt_r
+	AussenTemp             AttrID = 5373   // temp_ats_r
+	AbgasTemp              AttrID = 5372   // temp_agt_r
 	BoilerTemp             AttrID = 5374   // temp_kts_r
-	HotWaterTemp           AttrID = 5381   // temp_ww_r
-	HotWaterOutTemp        AttrID = 5382   // temp_auslauf_r
-	HeatWaterOutTemp       AttrID = 6052   // temp_vts_r
-	HeatNormalTemp         AttrID = 82     // konf_raumsolltemp_rw
-	PartyModeTemp          AttrID = 79     // konf_partysolltemp_rw
-	HeatReducedTemp        AttrID = 85     // konf_raumsolltemp_reduziert_rw
-	HotWaterSetpointTemp   AttrID = 51     // konf_ww_solltemp_rw
-	BurnerHoursRun         AttrID = 104    // anzahl_brennerstunden_r
-	BurnerHoursRunReset    AttrID = 106    // anzahl_brennerstunden_w
-	BurnerState            AttrID = 600    // zustand_brenner_r
+	HeisswasserTemp        AttrID = 5381   // temp_ww_r
+	HeisswasserAusgangTemp AttrID = 5382   // temp_auslauf_r
+	HeizwasserAusgangTemp  AttrID = 6053   // temp_vts_r
+	HeizNormalTempM1       AttrID = 82     // konf_raumsolltemp_rw
+	HeizNormalTempM2       AttrID = 83     // konf_raumsolltemp_rw
+	HeizPartyTempM1        AttrID = 79     // konf_partysolltemp_rw
+	HeizPartyTempM2        AttrID = 80     // konf_partysolltemp_rw
+	HeizReduziertTempM1    AttrID = 85     // konf_raumsolltemp_reduziert_rw
+	HeizReduziertTempM2    AttrID = 86     // konf_raumsolltemp_reduziert_rw
+	HeisswasserSollTemp    AttrID = 51     // konf_ww_solltemp_rw
+	AnzahlBrennerstunden   AttrID = 104    // anzahl_brennerstunden_r
+	BrennerStatus          AttrID = 600    // zustand_brenner_r
 	BurnerStarts           AttrID = 111    // anzahl_brennerstart_r
 	InternalPumpStatus     AttrID = 245    // zustand_interne_pumpe_r
 	HeatingPumpStatus      AttrID = 729    // zustand_heizkreispumpe_r
@@ -42,6 +44,8 @@ const (
 	BetriebsartM2          AttrID = 94     // konf_betriebsart_rw
 	NeigungM1              AttrID = 2869   // konf_neigung_rw
 	NeigungM2              AttrID = 2871   // konf_neigung_rw
+	NiveauM1               AttrID = 2875   // konf_niveau_rw
+	NiveauM2               AttrID = 2877   // konf_niveau_rw
 	NoAttr                 AttrID = 0xffff // Used in error cases
 )
 
@@ -79,83 +83,98 @@ func (r *AttrRef) String() string {
 
 // AttributesRef lists the reference for each attribute ID.
 var AttributesRef = map[AttrID]*AttrRef{
-	OutdoorTemp: {
+	AussenTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Outdoor temperature",
-		Name:   "OutdoorTemp",
+		Doc:    "Außen Temperatur",
+		Name:   "AussenTemp",
 	},
-	SmokeTemp: {
+	AbgasTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Smoke temperature",
-		Name:   "SmokeTemp",
+		Doc:    "Abgas Temperatur",
+		Name:   "AbgasTemp",
 	},
 	BoilerTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Boiler temperature",
+		Doc:    "Boiler Temperatur",
 		Name:   "BoilerTemp",
 	},
-	HotWaterTemp: {
+	HeisswasserTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Hot water temperature",
-		Name:   "HotWaterTemp",
+		Doc:    "Heißwasser Temperatur",
+		Name:   "HeisswasserTemp",
 	},
-	HotWaterOutTemp: {
+	HeisswasserAusgangTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Hot water outlet temperature",
-		Name:   "HotWaterOutTemp",
+		Doc:    "Heißwasser Ausgangstemperatur",
+		Name:   "HeisswasserAusgangTemp",
 	},
-	HeatWaterOutTemp: {
+	HeizwasserAusgangTemp: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Heating water outlet temperature",
-		Name:   "HeatWaterOutTemp",
+		Doc:    "Heizwasser Ausgangstemperatur",
+		Name:   "HeizwasserAusgangTemp",
 	},
-	HeatNormalTemp: {
+	HeizNormalTempM1: {
 		Type:   TypeDouble,
 		Access: ReadWrite,
-		Doc:    "Setpoint of the normal room temperature",
-		Name:   "HeatNormalTemp",
+		Doc:    "Normale Raumsolltemperatur Heizkörper",
+		Name:   "HeizNormalTempM1",
 	},
-	PartyModeTemp: {
+	HeizNormalTempM2: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Normale Raumsolltemperatur Fußbodenheizung",
+                Name:   "HeizNormalTempM2",
+        },
+	HeizPartyTempM1: {
 		Type:   TypeDouble,
 		Access: ReadWrite,
-		Doc:    "Party mode temperature",
-		Name:   "PartyModeTemp",
+		Doc:    "Party Raumtemperatur Heizkörper",
+		Name:   "HeizPartyTempM1",
 	},
-	HeatReducedTemp: {
+        HeizPartyTempM2: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Party Raumtemperatur Fußbodenheizung",
+                Name:   "HeizPartyTempM2",
+        },
+	HeizReduziertTempM1: {
 		Type:   TypeDouble,
 		Access: ReadWrite,
-		Doc:    "Setpoint of the reduced room temperature",
-		Name:   "HeatReducedTemp",
+		Doc:    "Reduzierte Raumtemperatur Heizkörper",
+		Name:   "HeizReduziertTempM1",
 	},
-	HotWaterSetpointTemp: {
+        HeizReduziertTempM2: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Reduzierte Raumtemperatur Fußbodenheizung",
+                Name:   "HeizReduziertTempM2",
+        },
+	HeisswasserSollTemp: {
 		Type:   TypeDouble,
 		Access: ReadWrite,
-		Doc:    "Setpoint of the domestic hot water temperature",
-		Name:   "HotWaterSetpointTemp",
+		Doc:    "Solltemperatur Warmwasser",
+		Name:   "HeisswasserSollTemp",
 	},
-	BurnerHoursRun: {
+	AnzahlBrennerstunden: {
 		Type:   TypeDouble,
 		Access: ReadOnly,
-		Doc:    "Burner hours run",
-		Name:   "BurnerHoursRun",
+		Doc:    "Brennerstundenanzahl",
+		Name:   "AnzahlBrennerstunden",
 	},
-	BurnerHoursRunReset: {
-		Type:   TypeDouble,
-		Access: WriteOnly,
-		Doc:    "Reset the burner hours run",
-		Name:   "BurnerHoursRunReset",
-	},
-	BurnerState: {
-		Type:   TypeOnOffEnum,
+	BrennerStatus: {
+		Type: NewEnum([]string{ // 0 -> 1
+                        "Aus",
+                        "Ein",
+                }),
 		Access: ReadOnly,
-		Doc:    "Burner status",
-		Name:   "BurnerState",
+		Doc:    "Brenner Status",
+		Name:   "BrennerStatus",
 	},
 	BurnerStarts: {
 		Type:   TypeDouble,
@@ -292,6 +311,19 @@ var AttributesRef = map[AttrID]*AttrRef{
                 Doc:    "Neigung Fussbodenheizung",
                 Name:   "NeigungM2",
         },
+	NiveauM1: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Niveau Heizkörper",
+                Name:   "NiveauM1",
+        },
+	NiveauM2: {
+                Type:   TypeDouble,
+                Access: ReadWrite,
+                Doc:    "Niveau Fussbodenheizung",
+                Name:   "NiveauM2",
+        },
+
 }
 
 // AddAttributeRef adds a new attribute to the "official" list. This
