@@ -379,8 +379,8 @@ var AttributesRef = map[AttrID]*AttrRef{
 			"Dauernd Normal",
 		}),
 		Access: ReadWrite,
-		Doc:    "Betriebsart Fussbodenheizung",
-		Name:   "konf_betriebsart_rw-0x005e",
+		Doc:    "Betriebsart Fußbodenheizung",
+		Name:   "BetriebsartM2",
 	},
 	NeigungM1: {
                 Type:   TypeDouble,
@@ -391,7 +391,7 @@ var AttributesRef = map[AttrID]*AttrRef{
         NeigungM2: {
                 Type:   TypeDouble,
                 Access: ReadWrite,
-                Doc:    "Neigung Fussbodenheizung",
+                Doc:    "Neigung Fußbodenheizung",
                 Name:   "NeigungM2",
         },
 	NiveauM1: {
@@ -403,7 +403,7 @@ var AttributesRef = map[AttrID]*AttrRef{
 	NiveauM2: {
                 Type:   TypeDouble,
                 Access: ReadWrite,
-                Doc:    "Niveau Fussbodenheizung",
+                Doc:    "Niveau Fußbodenheizung",
                 Name:   "NiveauM2",
         },
 	Heizungsschema: {
