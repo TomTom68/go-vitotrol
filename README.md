@@ -1,14 +1,9 @@
-Package `go-vitotrol` provides access to the Viessmann™
-Vitotrol™ cloud API for controlling/monitoring boilers.
+Das Paket `go-vitotrol` ermöglicht einen Zugriff auf die Viessmann™
+Vitotrol™ cloud API und damit zur Anzeige und Steuerung einer Heizungsanlage.
 
-[![Build Status](https://travis-ci.org/maxatome/go-vitotrol.svg)](https://travis-ci.org/maxatome/go-vitotrol)
-[![Coverage Status](https://coveralls.io/repos/github/maxatome/go-vitotrol/badge.svg?branch=master)](https://coveralls.io/github/maxatome/go-vitotrol?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/maxatome/go-vitotrol)](https://goreportcard.com/report/github.com/maxatome/go-vitotrol)
-[![GoDoc](https://godoc.org/github.com/maxatome/go-vitotrol?status.svg)](https://godoc.org/github.com/maxatome/go-vitotrol)
+Siehe auch https://www.viessmann.com/app_vitodata/VIIWebService-1.16.0.0/iPhoneWebService.asmx
 
-See https://www.viessmann.com/app_vitodata/VIIWebService-1.16.0.0/iPhoneWebService.asmx
-
-Only requests I really need are currently implemented:
+Folgende Befehle sind umgesetzt und funktionieren für eine Heizungsanlage vom Typ Vitodens 333-F:
 - Login
 - GetDevices
 - RequestRefreshStatus
@@ -21,9 +16,7 @@ Only requests I really need are currently implemented:
 - WriteTimesheetData
 - GetTypeInfo
 
-Any pull-request is welcome.
-
-## Install
+## Installation
 
 ### The `vitotrol` command
 
@@ -113,9 +106,3 @@ PASSWORD
 ## License
 
 go-vitotrol is released under the MIT License.
-
-
-## Miscellaneous
-
-Want to automatically feed an Influx database with attribute values?
-See [vitotrol2influx](https://github.com/maxatome/vitotrol2influx).
